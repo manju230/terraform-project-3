@@ -43,7 +43,7 @@ resource "aws_security_group" "app_sg" {
 resource "aws_instance" "app_server" {
   ami           = data.aws_ami.amazon-linux.id
   instance_type = var.instance_type
-  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.id
   subnet_id     = data.aws_subnet.app_a.id
   disable_api_termination = true
    associate_public_ip_address = false
