@@ -51,14 +51,14 @@ resource "aws_instance" "app_server" {
 
   # Root volume (20 GB gp2)
   root_block_device {
-    volume_size = 20
+    volume_size = 30
     volume_type = "gp2"
   }
 
   # Additional EBS volume (20 GB gp2)
   ebs_block_device {
     device_name = "/dev/sdf"   # Linux convention, adjust if needed
-    volume_size = 20
+    volume_size = 30
     volume_type = "gp2"
   }
  user_data = file("./userdata.sh")
