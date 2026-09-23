@@ -21,7 +21,6 @@ resource "aws_iam_role" "ec2_role" {
 
 resource "aws_iam_policy" "s3_access" {    
     name = "project-tf-s3-policy"
-    role = aws_iam_role.ec2_role.id
     policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -34,6 +33,11 @@ resource "aws_iam_policy" "s3_access" {
     ]
 })
 
+}
+
+resource "aws_iam_role_policy_attachment" "s3_access" {
+    role       = aws_iam_role.ec2_role.name
+    policy_arn = aws_iam_policy.s3_access.arn
 }
 
 resource "aws_iam_instance_profile" "ec2_profile" {
