@@ -17,11 +17,11 @@ resource "aws_iam_role" "ec2_role" {
         }
     ]
 })
-tags = local.comman_tags
+tags = locals.comman_tags
 }
 
 resource "aws_iam_policy" "s3_access" {
-    name = project-tf-s3-policy
+    name = "project-tf-s3-policy"
     role = aws_iam_role.ec2_role.id
     policy = jsonencode({
     "Version": "2012-10-17",
@@ -34,12 +34,12 @@ resource "aws_iam_policy" "s3_access" {
         }
     ]
 })
-tags = local.comman_tags
+tags = locals.comman_tags
 }
 
 resource "aws_iam_instance_profile" "ec2_profile" {
     name = "ec2-profile-role"
-    role = role = aws_iam_role.ec2_role.id
-    tags = local.comman_tags
+   role = aws_iam_role.ec2_role.id
+    tags = locals.comman_tags
 }
 

@@ -1,4 +1,4 @@
-locals = {
+locals  {
     comman_tags = {
     Project     = "Enterprise"
     Environment = "Development"
