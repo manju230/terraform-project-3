@@ -15,7 +15,7 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                dir('ec2') {
+                dir('dev/ec2') {
                     sh 'terraform init'
                 }
             }
@@ -23,7 +23,7 @@ pipeline {
 
         stage('Terraform Format') {
             steps {
-                dir('ec2') {
+                dir('dev/ec2') {
                     sh 'terraform fmt -recursive'
                 }
             }
@@ -31,7 +31,7 @@ pipeline {
 
         stage('Terraform Validate') {
             steps {
-                dir('ec2') {
+                dir('dev/ec2') {
                     sh 'terraform validate'
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                dir('ec2') {
+                dir('dev/ec2') {
                     sh 'terraform plan -out=tfplan'
                 }
             }
@@ -64,7 +64,7 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                dir('ec2') {
+                dir('dev/ec2') {
                     sh 'terraform apply tfplan'
                 }
             }
