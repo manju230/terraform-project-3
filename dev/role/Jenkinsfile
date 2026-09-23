@@ -15,7 +15,7 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                dir('role') {
+                dir('dev/role') {
                     sh 'terraform init'
                 }
             }
@@ -23,7 +23,7 @@ pipeline {
 
         stage('Terraform Format') {
             steps {
-                dir('role') {
+                dir('dev/role') {
                     sh 'terraform fmt -recursive'
                 }
             }
@@ -31,7 +31,7 @@ pipeline {
 
         stage('Terraform Validate') {
             steps {
-                dir('role') {
+                dir('dev/role') {
                     sh 'terraform validate'
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                dir('role') {
+                dir('dev/role') {
                     sh 'terraform plan -out=tfplan'
                 }
             }
@@ -64,7 +64,7 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                dir('role') {
+                dir('dev/role') {
                     sh 'terraform apply tfplan'
                 }
             }
