@@ -1,0 +1,71 @@
+pipeline {
+    agent any
+
+    environment {
+        TF_WORKSPACE = "default"
+        TF_CLI_ARGS = "-no-color"
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'develop', url: 'https://github.com/manju230/project-2-ec2.git'
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+
+        stage('Terraform Format') {
+            steps {
+                sh 'terraform fmt -recursive'
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                sh 'terraform validate'
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                sh 'terraform plan -out=tfplan'
+            }
+        }
+
+        stage('Approval') {
+            steps {
+                script {
+                    def userInput = input(
+                        id: 'Proceed1', message: 'Do you want to apply this Terraform plan?',
+                        parameters: [
+                            choice(name: 'Confirm', choices: ['No', 'Yes'], description: 'Select Yes to apply, No to abort')
+                        ]
+                    )
+                    if (userInput == 'No') {
+                        error("Terraform apply aborted by user.")
+                    }
+                }
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                sh 'terraform apply tfplan'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Terraform pipeline completed successfully!'
+        }
+        failure {
+            echo 'Terraform pipeline failed or was aborted.'
+        }
+    }
+}
