@@ -15,7 +15,7 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                dir('vpc') {
+                dir('dev/vpc') {
                     sh 'terraform init'
                 }
             }
@@ -23,7 +23,7 @@ pipeline {
 
         stage('Terraform Format') {
             steps {
-                dir('vpc') {
+                dir('dev/vpc') {
                     sh 'terraform fmt -recursive'
                 }
             }
@@ -31,7 +31,7 @@ pipeline {
 
         stage('Terraform Validate') {
             steps {
-                dir('vpc') {
+                dir('dev/vpc') {
                     sh 'terraform validate'
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                dir('vpc') {
+                dir('dev/vpc') {
                     sh 'terraform plan -var-file=terraform.tfvars -out=tfplan'
                 }
             }
@@ -64,7 +64,7 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                dir('vpc') {
+                dir('dev/vpc') {
                     sh 'terraform apply tfplan'
                 }
             }
